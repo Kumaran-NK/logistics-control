@@ -34,6 +34,7 @@ function resolveUrl(input: RequestInfo | URL): string {
       if (!baseUrl.startsWith('http://') && !baseUrl.startsWith('https://')) {
         baseUrl = 'https://' + baseUrl;
       }
+      baseUrl = baseUrl.replace(/\/api\/?$/, ''); // Fix user accidental /api trailing
       return baseUrl.replace(/\/$/, '') + urlStr;
     }
   } catch (e) {
