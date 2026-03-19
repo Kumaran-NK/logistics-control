@@ -32,8 +32,7 @@ else
 fi
 
 echo "==> Starting LOGI.AI API Server on port ${PORT:-8080}..."
-if [ "${NODE_ENV:-}" = "production" ]; then
-  exec pnpm --filter @workspace/api-server run start
-else
+if [ "${NODE_ENV:-}" = "development" ]; then
   exec pnpm --filter @workspace/api-server run dev
 fi
+exec pnpm --filter @workspace/api-server run start
