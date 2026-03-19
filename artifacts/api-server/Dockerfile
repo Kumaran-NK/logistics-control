@@ -24,6 +24,10 @@ COPY artifacts/api-server/ ./artifacts/api-server/
 # Install all dependencies
 RUN pnpm install --frozen-lockfile
 
+# Build API server for production start
+WORKDIR /app/artifacts/api-server
+RUN pnpm run build
+
 # Copy and prepare the entrypoint
 COPY docker/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
