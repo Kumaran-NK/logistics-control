@@ -37,7 +37,7 @@ router.get("/fragmentation/analysis", async (_req, res) => {
       potential_savings_pct: rnd(10, 28, 1),
       ai_confidence: "mock",
     });
-  } catch {
+  } catch (err) { console.error('API Error:', err);
     res.status(500).json({ error: "Failed to fetch analysis" });
   }
 });

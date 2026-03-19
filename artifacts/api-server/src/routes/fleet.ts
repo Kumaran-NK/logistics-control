@@ -49,7 +49,7 @@ router.get("/drivers", async (_req, res) => {
   try {
     const drivers = await db.select().from(driversTable);
     res.json(drivers);
-  } catch {
+  } catch (err) { console.error('API Error:', err);
     res.status(500).json({ error: "Failed to fetch drivers" });
   }
 });
@@ -74,7 +74,7 @@ router.get("/fleet", async (_req, res) => {
       };
     });
     res.json(result);
-  } catch {
+  } catch (err) { console.error('API Error:', err);
     res.status(500).json({ error: "Failed to fetch fleet" });
   }
 });
@@ -85,7 +85,7 @@ router.post("/fleet/assign", async (req, res) => {
     await db.update(driversTable).set({ truck_id, status: "on_duty" }).where(eq(driversTable.id, driver_id));
     await db.update(trucksTable).set({ driver_id, status: "in_transit" }).where(eq(trucksTable.truck_id, truck_id));
     res.json({ success: true, message: `Driver ${driver_id} assigned to truck ${truck_id}`, driver_id, truck_id });
-  } catch {
+  } catch (err) { console.error('API Error:', err);
     res.status(500).json({ error: "Failed to assign driver" });
   }
 });

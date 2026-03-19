@@ -18,7 +18,7 @@ router.get("/yard/slots", async (_req, res) => {
   try {
     const slots = await db.select().from(yardSlotsTable);
     res.json(slots);
-  } catch {
+  } catch (err) { console.error('API Error:', err);
     res.status(500).json({ error: "Failed to fetch yard slots" });
   }
 });
@@ -28,7 +28,7 @@ router.get("/yard/docks", async (_req, res) => {
   try {
     const docks = await db.select().from(docksTable);
     res.json(docks);
-  } catch {
+  } catch (err) { console.error('API Error:', err);
     res.status(500).json({ error: "Failed to fetch docks" });
   }
 });
@@ -38,7 +38,7 @@ router.get("/yard/arrivals", async (_req, res) => {
   try {
     const arrivals = await db.select().from(truckArrivalsTable);
     res.json(arrivals);
-  } catch {
+  } catch (err) { console.error('API Error:', err);
     res.status(500).json({ error: "Failed to fetch arrivals" });
   }
 });
@@ -61,7 +61,7 @@ router.post("/yard/schedule-arrival", async (req, res) => {
       status: "scheduled",
     }).returning();
     res.status(201).json(inserted[0]);
-  } catch {
+  } catch (err) { console.error('API Error:', err);
     res.status(500).json({ error: "Failed to schedule arrival" });
   }
 });
@@ -83,7 +83,7 @@ router.post("/yard/assign-dock", async (req, res) => {
     }
     const waitMinutes = rnd(5, 25, 0);
     res.json({ success: true, message: `Truck ${truck_id} assigned to ${dock[0].name}`, dock_id, estimated_wait_minutes: waitMinutes });
-  } catch {
+  } catch (err) { console.error('API Error:', err);
     res.status(500).json({ error: "Failed to assign dock" });
   }
 });
@@ -104,7 +104,7 @@ router.get("/yard/traffic", async (_req, res) => {
       estimated_wait_minutes: rnd(5, 20, 0),
       ai_confidence: "mock",
     });
-  } catch {
+  } catch (err) { console.error('API Error:', err);
     res.status(500).json({ error: "Failed to get yard traffic" });
   }
 });

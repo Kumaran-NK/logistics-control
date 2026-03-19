@@ -20,7 +20,7 @@ router.get("/verify/list", async (_req, res) => {
   try {
     const records = await db.select().from(shipmentVerificationsTable).orderBy(shipmentVerificationsTable.timestamp);
     res.json(records.map(formatVerification));
-  } catch {
+  } catch (err) { console.error('API Error:', err);
     res.status(500).json({ error: "Failed to fetch verifications" });
   }
 });
@@ -31,7 +31,7 @@ router.get("/verify/:shipmentId", async (req, res) => {
       .where(eq(shipmentVerificationsTable.shipment_id, req.params.shipmentId));
     if (!rows.length) return res.status(404).json({ error: "Not found" });
     res.json(formatVerification(rows[rows.length - 1]));
-  } catch {
+  } catch (err) { console.error('API Error:', err);
     res.status(500).json({ error: "Failed to fetch verification" });
   }
 });
@@ -50,7 +50,7 @@ router.post("/verify/scan", async (req, res) => {
       confidence: "mock",
     }).returning();
     res.json(formatVerification(inserted[0]));
-  } catch {
+  } catch (err) { console.error('API Error:', err);
     res.status(500).json({ error: "Failed to scan shipment" });
   }
 });
@@ -69,7 +69,7 @@ router.post("/verify/photo", async (req, res) => {
       confidence: "mock",
     }).returning();
     res.json(formatVerification(inserted[0]));
-  } catch {
+  } catch (err) { console.error('API Error:', err);
     res.status(500).json({ error: "Failed to photo-verify shipment" });
   }
 });
@@ -87,7 +87,7 @@ router.post("/verify/report-damage", async (req, res) => {
       confidence: "mock",
     }).returning();
     res.json(formatVerification(inserted[0]));
-  } catch {
+  } catch (err) { console.error('API Error:', err);
     res.status(500).json({ error: "Failed to report damage" });
   }
 });

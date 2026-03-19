@@ -37,7 +37,7 @@ router.get("/routes", async (_req, res) => {
       waypoints: JSON.parse(r.waypoints),
       created_at: r.created_at.toISOString(),
     })));
-  } catch {
+  } catch (err) { console.error('API Error:', err);
     res.status(500).json({ error: "Failed to fetch routes" });
   }
 });
@@ -72,7 +72,7 @@ router.post("/routes/optimize", async (req, res) => {
       waypoints: JSON.parse(r.waypoints),
       created_at: r.created_at.toISOString(),
     });
-  } catch {
+  } catch (err) { console.error('API Error:', err);
     res.status(500).json({ error: "Failed to optimize route" });
   }
 });

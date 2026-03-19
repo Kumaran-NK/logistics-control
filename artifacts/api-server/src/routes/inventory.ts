@@ -41,7 +41,7 @@ router.get("/inventory", async (_req, res) => {
       ...s,
       updated_at: s.updated_at.toISOString(),
     })));
-  } catch {
+  } catch (err) { console.error('API Error:', err);
     res.status(500).json({ error: "Failed to fetch inventory" });
   }
 });
@@ -84,7 +84,7 @@ router.post("/inventory", async (req, res) => {
       unit_price: body.unit_price,
       updated_at: stock.updated_at.toISOString(),
     });
-  } catch {
+  } catch (err) { console.error('API Error:', err);
     res.status(500).json({ error: "Failed to create inventory item" });
   }
 });
@@ -120,7 +120,7 @@ router.put("/inventory/:id", async (req, res) => {
       unit_price: p?.unit_price,
       updated_at: stock.updated_at.toISOString(),
     });
-  } catch {
+  } catch (err) { console.error('API Error:', err);
     res.status(500).json({ error: "Failed to update inventory item" });
   }
 });

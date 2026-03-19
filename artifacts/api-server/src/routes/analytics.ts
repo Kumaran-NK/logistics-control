@@ -47,7 +47,7 @@ router.get("/analytics/kpis", async (_req, res) => {
       cost_savings_pct: rnd(8, 18, 1),
       ai_confidence: "mock",
     });
-  } catch {
+  } catch (err) { console.error('API Error:', err);
     res.status(500).json({ error: "Failed to get KPIs" });
   }
 });
@@ -78,7 +78,7 @@ router.get("/analytics/fleet", async (_req, res) => {
       avg_fuel_pct: rnd(45, 80, 1),
       utilization_history: hours,
     });
-  } catch {
+  } catch (err) { console.error('API Error:', err);
     res.status(500).json({ error: "Failed to get fleet analytics" });
   }
 });

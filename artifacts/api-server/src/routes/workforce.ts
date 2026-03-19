@@ -32,7 +32,7 @@ router.get("/workers", async (_req, res) => {
   try {
     const workers = await db.select().from(workersTable);
     res.json(workers.map(formatWorker));
-  } catch {
+  } catch (err) { console.error('API Error:', err);
     res.status(500).json({ error: "Failed to fetch workers" });
   }
 });
@@ -53,7 +53,7 @@ router.post("/workers", async (req, res) => {
       ai_recommendation: getRecommendation(score),
     }).returning();
     res.status(201).json(formatWorker(inserted[0]));
-  } catch {
+  } catch (err) { console.error('API Error:', err);
     res.status(500).json({ error: "Failed to create worker" });
   }
 });
@@ -75,7 +75,7 @@ router.post("/workers/assign-task", async (req, res) => {
       assigned_time: task.assigned_time.toISOString(),
       completed_time: null,
     });
-  } catch {
+  } catch (err) { console.error('API Error:', err);
     res.status(500).json({ error: "Failed to assign task" });
   }
 });
@@ -88,7 +88,7 @@ router.get("/workers/tasks", async (_req, res) => {
       assigned_time: t.assigned_time.toISOString(),
       completed_time: t.completed_time?.toISOString() ?? null,
     })));
-  } catch {
+  } catch (err) { console.error('API Error:', err);
     res.status(500).json({ error: "Failed to fetch tasks" });
   }
 });
@@ -105,7 +105,7 @@ router.get("/workers/performance", async (_req, res) => {
       recommendation: getRecommendation(w.performance_score),
       eligible_for_reward: w.performance_score >= 90,
     })));
-  } catch {
+  } catch (err) { console.error('API Error:', err);
     res.status(500).json({ error: "Failed to get performance" });
   }
 });
@@ -121,7 +121,7 @@ router.get("/workers/rewards", async (_req, res) => {
       tier: getRewardTier(w.reward_points),
       last_reward_reason: w.performance_score >= 85 ? "Top performer — weekly bonus" : null,
     })));
-  } catch {
+  } catch (err) { console.error('API Error:', err);
     res.status(500).json({ error: "Failed to get rewards" });
   }
 });
