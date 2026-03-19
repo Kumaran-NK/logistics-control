@@ -29,8 +29,11 @@ function resolveUrl(input: RequestInfo | URL): string {
   let urlStr = typeof input === "string" ? input : (isUrl(input) ? input.toString() : input.url);
 
   try {
-    const baseUrl = (import.meta as any).env?.VITE_API_URL;
+    let baseUrl = (import.meta as any).env?.VITE_API_URL;
     if (baseUrl && typeof baseUrl === 'string' && urlStr.startsWith('/api')) {
+      if (!baseUrl.startsWith('http://') && !baseUrl.startsWith('https://')) {
+        baseUrl = 'https://' + baseUrl;
+      }
       return baseUrl.replace(/\/$/, '') + urlStr;
     }
   } catch (e) {
@@ -315,5 +318,10 @@ export async function customFetch<T = unknown>(
     throw new ApiError(response, errorData, requestInfo);
   }
 
-  return (await parseSuccessBody(response, responseType, requestInfo)) as T;
+  const parsed = await parseSuccessBody(response, responseType, requestInfo);
+  if (typeof parsed === 'string' && parsed.trim().toLowerCase().startsWith('<!doctype html')) {
+    throw new ApiError(response, { error: "Received HTML document. Incorrect API proxy." }, requestInfo);
+  }
+  
+  return parsed as T;
 }
