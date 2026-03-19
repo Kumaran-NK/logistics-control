@@ -26,9 +26,18 @@ function isUrl(input: RequestInfo | URL): input is URL {
 }
 
 function resolveUrl(input: RequestInfo | URL): string {
-  if (typeof input === "string") return input;
-  if (isUrl(input)) return input.toString();
-  return input.url;
+  let urlStr = typeof input === "string" ? input : (isUrl(input) ? input.toString() : input.url);
+
+  try {
+    const baseUrl = (import.meta as any).env?.VITE_API_URL;
+    if (baseUrl && typeof baseUrl === 'string' && urlStr.startsWith('/api')) {
+      return baseUrl.replace(/\/$/, '') + urlStr;
+    }
+  } catch (e) {
+    // Ignore environment variable errors in non-browser context
+  }
+
+  return urlStr;
 }
 
 function mergeHeaders(...sources: Array<HeadersInit | undefined>): Headers {
