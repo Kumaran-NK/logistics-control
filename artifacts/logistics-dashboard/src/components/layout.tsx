@@ -1,13 +1,13 @@
 import { ReactNode } from "react";
 import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
-import { 
-  LayoutDashboard, 
-  Package, 
-  Truck, 
-  Boxes, 
-  BarChart3, 
-  RadioReceiver, 
+import {
+  LayoutDashboard,
+  Package,
+  Truck,
+  Boxes,
+  BarChart3,
+  RadioReceiver,
   ShieldAlert,
   MapPin,
   Network,
@@ -38,12 +38,12 @@ export default function Layout({ children }: { children: ReactNode }) {
         <div className="p-6 border-b border-border/50">
           <div className="flex items-center gap-3 text-primary">
             <div className="relative flex items-center justify-center">
-              <img 
-                src="/images/Meridian-Logo.png" 
-                alt="Meridian Logo" 
-                className="w-8 h-8 object-contain"
+              <img
+                src="/images/Meridian-Logo.png"
+                alt="Meridian Logo"
+                className="w-16 h-16 object-contain drop-shadow-[0_0_8px_rgba(6,182,212,0.3)]"
               />
-              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-primary rounded-full animate-ping" />
+              <span className="absolute top-0 -right-1 w-2.5 h-2.5 bg-primary rounded-full animate-ping" />
             </div>
             <div>
               <h1 className="text-2xl font-bold tracking-widest text-glow leading-none">MERIDIAN</h1>
@@ -56,20 +56,20 @@ export default function Layout({ children }: { children: ReactNode }) {
           {navItems.map((item) => {
             const isActive = location === item.href;
             return (
-              <Link 
-                key={item.href} 
+              <Link
+                key={item.href}
                 href={item.href}
                 className={cn(
                   "flex items-center gap-3 px-4 py-3 rounded-lg font-semibold tracking-wider uppercase text-xs transition-all duration-300 relative overflow-hidden group",
-                  isActive 
-                    ? "text-primary bg-primary/10 border border-primary/30 box-glow" 
+                  isActive
+                    ? "text-primary bg-primary/10 border border-primary/30 box-glow"
                     : "text-muted-foreground hover:text-foreground hover:bg-card border border-transparent"
                 )}
               >
                 {isActive && (
-                  <motion.div 
-                    layoutId="sidebar-active" 
-                    className="absolute left-0 top-0 bottom-0 w-1 bg-primary shadow-[0_0_10px_rgba(6,182,212,0.8)]" 
+                  <motion.div
+                    layoutId="sidebar-active"
+                    className="absolute left-0 top-0 bottom-0 w-1 bg-primary shadow-[0_0_10px_rgba(6,182,212,0.8)]"
                   />
                 )}
                 <item.icon className={cn("w-4 h-4", isActive ? "text-primary" : "text-muted-foreground group-hover:text-primary/70 transition-colors")} />
@@ -101,7 +101,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             {new Date().toISOString().split('T')[0]} // SYS_TIME
           </div>
         </header>
-        
+
         <div className="flex-1 overflow-y-auto p-6 md:p-8 relative z-0">
           {children}
         </div>
