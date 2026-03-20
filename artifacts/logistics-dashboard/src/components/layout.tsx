@@ -37,12 +37,16 @@ export default function Layout({ children }: { children: ReactNode }) {
       <aside className="w-72 glass-panel border-r border-y-0 border-l-0 rounded-none flex flex-col z-20 shrink-0">
         <div className="p-6 border-b border-border/50">
           <div className="flex items-center gap-3 text-primary">
-            <div className="relative">
-              <RadioReceiver className="w-8 h-8" />
+            <div className="relative flex items-center justify-center">
+              <img 
+                src="/images/Meridian-Logo.png" 
+                alt="Meridian Logo" 
+                className="w-8 h-8 object-contain"
+              />
               <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-primary rounded-full animate-ping" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold tracking-widest text-glow leading-none">LOGI.AI</h1>
+              <h1 className="text-2xl font-bold tracking-widest text-glow leading-none">MERIDIAN</h1>
               <p className="text-[10px] font-mono tracking-widest uppercase text-primary/70 mt-1">Logistics Control Tower</p>
             </div>
           </div>
